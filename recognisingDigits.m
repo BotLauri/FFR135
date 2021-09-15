@@ -40,20 +40,23 @@ inputPattern = [[-1, 1, -1, -1, -1, -1, 1, -1, 1, 1];
                 [1, -1, 1, 1, -1, 1, -1, 1, -1, -1];
                 [-1, -1, 1, 1, -1, -1, -1, 1, -1, 1];
                 [-1, -1, -1, 1, -1, -1, -1, 1, -1, -1];
-                [1, -1, -1, 1, 1, 1, -1, 1, 1, -1]; 
-                [1, 1, 1, 1, 1, 1, -1, -1, 1, -1]; 
+                [1, -1, -1, 1, 1, 1, -1, 1, 1, -1];
+                [1, 1, 1, 1, 1, 1, -1, -1, 1, -1];
                 [1, -1, 1, 1, -1, 1, -1, 1, -1, 1];
-                [1, 1, 1, 1, -1, 1, 1, 1, 1, 1]; 
+                [1, 1, 1, 1, -1, 1, 1, 1, 1, 1];
                 [-1, -1, -1, -1, -1, 1, -1, 1, -1, 1];
                 [1, -1, 1, -1, 1, 1, 1, -1, -1, 1];
                 [-1, 1, 1, 1, -1, -1, -1, -1, 1, 1]];
             
+%inputPattern = [[-1, 1, -1, -1, -1, -1, 1, -1, 1, 1], [1, -1, -1, -1, 1, -1, -1, 1, 1, -1], [-1, 1, 1, -1, 1, -1, -1, 1, -1, 1], [-1, 1, 1, -1, 1, -1, -1, -1, -1, -1], [1, 1, 1, 1, -1, 1, -1, -1, -1, 1], [-1, 1, 1, 1, -1, -1, -1, 1, -1, 1], [1, -1, 1, 1, -1, 1, -1, 1, -1, -1], [-1, -1, 1, 1, -1, -1, -1, 1, -1, 1], [-1, -1, -1, 1, -1, -1, -1, 1, -1, -1], [1, -1, -1, 1, 1, 1, -1, 1, 1, -1], [1, 1, 1, 1, 1, 1, -1, -1, 1, -1], [1, -1, 1, 1, -1, 1, -1, 1, -1, 1], [1, 1, 1, 1, -1, 1, 1, 1, 1, 1], [-1, -1, -1, -1, -1, 1, -1, 1, -1, 1], [1, -1, 1, -1, 1, 1, 1, -1, -1, 1], [-1, 1, 1, 1, -1, -1, -1, -1, 1, 1]];
+            
 % Loop through N times.
 states = reshape(inputPattern, 1, []);
-updates = 10^4;
+updates = 10^3;
 for a = 1:updates
+    currentStates = states;
     for i = 1:length(states)
-        states(i) = sign(dot(weights(i, :), states));
+        states(i) = sign(dot(weights(i, :), currentStates));
         if states(i) == 0
             states(i) = 1;
         end
@@ -61,7 +64,6 @@ for a = 1:updates
 end 
 states_reshaped = reshape(states, 16, 10);
 imshow(states_reshaped)
-%imshow(-x4)
 
 %% Question 2.
 inputPattern2 = [[1, 1, 1, -1, -1, -1, -1, 1, 1, 1];
@@ -83,10 +85,11 @@ inputPattern2 = [[1, 1, 1, -1, -1, -1, -1, 1, 1, 1];
             
 % Loop through N times.
 states = reshape(inputPattern2, 1, []);
-updates = 10^4;
+updates = 10^3;
 for a = 1:updates
+    currentStates = states;
     for i = 1:length(states)
-        states(i) = sign(dot(states, weights(i, :)));
+        states(i) = sign(dot(weights(i, :), currentStates));
         if states(i) == 0
             states(i) = 1;
         end
@@ -116,7 +119,7 @@ inputPattern3 = [[1, 1, 1, -1, -1, 1, -1, 1, 1, -1];
              
 % Loop through N times.
 states = reshape(inputPattern3, 1, []);
-updates = 10^4;
+updates = 10^3;
 for a = 1:updates
     for i = 1:length(states)
         states(i) = sign(dot(states, weights(i, :)));
